@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Knot Canvas - 3D Parametric Knot Viewer</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="canvas-container"></div>
+    
+    <!-- Instructions Overlay -->
+    <div id="instructions-overlay">
+      <div class="instruction-content">
+        <h3>🖱️ 3D Controls</h3>
+        <ul>
+          <li><strong>Left Click + Drag:</strong> Rotate view</li>
+          <li><strong>Right Click + Drag:</strong> Pan camera</li>
+          <li><strong>Scroll Wheel:</strong> Zoom in/out</li>
+        </ul>
+        <button id="got-it-btn">Got it!</button>
+      </div>
+    </div>
+    
+    <!-- Control Panel -->
+    <div id="control-panel">
+      <h2>🪢 Knot Parameters</h2>
+      
+      <!-- Preset Selector -->
+      <div class="control-group">
+        <label for="preset-select">Preset Knots:</label>
+        <select id="preset-select">
+          <option value="trefoil">Trefoil Knot</option>
+          <option value="figure8">Figure-8 Knot</option>
+          <option value="cinquefoil">Cinquefoil Knot</option>
+          <option value="torus53">Torus Knot (5,3)</option>
+          <option value="lissajous">Lissajous Knot</option>
+          <option value="custom">Custom Formula</option>
+        </select>
+      </div>
+
+      <!-- Custom Formula Inputs -->
+      <div class="control-group" id="custom-inputs">
+        <label for="formula-combined">Enter formulas (one per line):</label>
+        <textarea id="formula-combined" rows="4" placeholder="X(t) = sin(t) + 2*sin(2*t)
+Y(t) = cos(t) - 2*cos(2*t)
+Z(t) = -sin(3*t)"></textarea>
+        <small class="hint">Paste all three formulas at once, or type one per line</small>
+      </div>
+
+      <!-- Rendering Options -->
+      <div class="control-group">
+        <label for="render-mode">Render Mode:</label>
+        <select id="render-mode">
+          <option value="line">Line</option>
+          <option value="tube">Tube (3D)</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <label for="tube-radius">Tube Radius:</label>
+        <input type="range" id="tube-radius" min="0.05" max="0.5" step="0.05" value="0.15" />
+        <span id="radius-value">0.15</span>
+      </div>
+
+      <div class="control-group">
+        <label for="color-picker">Color:</label>
+        <input type="color" id="color-picker" value="#ff6633" />
+      </div>
+
+      <div class="control-group">
+        <label for="samples">Samples:</label>
+        <input type="range" id="samples" min="100" max="2000" step="100" value="1000" />
+        <span id="samples-value">1000</span>
+      </div>
+
+      <!-- Update Button -->
+      <button id="update-btn">Update Knot</button>
+      
+      <!-- Export Button -->
+      <button id="export-stl-btn" class="secondary-btn">📥 Download STL for 3D Printing</button>
+      
+      <!-- Error Display -->
+      <div id="error-message"></div>
+      
+      <!-- Info -->
+      <div class="info">
+        <small>Use t as the parameter (0 to 2π). Available: sin, cos, tan, sqrt, abs, pow, exp, log, <strong>i</strong> (imaginary unit), <strong>e</strong>, <strong>pi</strong>. Complex results use real part. Press Ctrl+Enter to update.</small>
+      </div>
+    </div>
+
+    <script type="module" src="main.js"></script>
+  </body>
+</html>
