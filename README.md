@@ -1,179 +1,163 @@
-# 🪢 Knot Canvas - 3D Parametric Knot Viewer
+# 🪢 Knot Canvas
 
-An interactive 3D web application for visualizing and exploring mathematical knots using parametric equations. Students can create custom knots, visualize them in real-time, and export STL files for 3D printing!
-
-![Knot Canvas](https://img.shields.io/badge/Three.js-Interactive-green) ![Math](https://img.shields.io/badge/MathJS-Parametric-blue)
-
-## ✨ Features
-
-- **Interactive 3D Visualization**: Rotate, pan, and zoom with intuitive mouse controls
-- **Preset Knots**: Explore classic mathematical knots (Trefoil, Figure-8, Cinquefoil, Torus, Lissajous)
-- **Custom Formulas**: Define your own parametric equations using mathematical expressions
-- **Render Modes**: View as lines or solid tubes
-- **STL Export**: Download 3D-printable models of your knots! 🖨️
-- **Real-time Updates**: See changes instantly as you modify parameters
-
-## 🎮 Controls
-
-- **Left Click + Drag**: Rotate the view
-- **Right Click + Drag**: Pan the camera
-- **Scroll Wheel**: Zoom in/out
+A 3D parametric knot visualization tool built with Three.js. View, rotate, and explore mathematical knots in your browser.
 
 ## 🚀 Quick Start
 
-### Prerequisites
+### 1. Install Dependencies
 
-- Node.js (v16 or higher)
-- npm or yarn
-
-### Local Development
-
-1. Clone the repository:
-```bash
-git clone https://github.com/YOUR-USERNAME/knot-canvas.git
-cd knot-canvas
-```
-
-2. Install dependencies:
 ```bash
 npm install
 ```
 
-3. Start the development server:
+### 2. Run Development Server
+
 ```bash
 npm run dev
 ```
 
-4. Open your browser to `http://localhost:5173`
+### 3. Open in Browser
 
-### Build for Production
+Navigate to `http://localhost:5173` (or the port shown in your terminal)
 
-```bash
-npm run build
+## 🎮 Controls
+
+- **Left-click + drag**: Rotate the view
+- **Right-click + drag**: Pan the camera
+- **Scroll wheel**: Zoom in/out
+
+## 📐 Knot Formulas
+
+The project includes several parametric knot equations. You can switch between them by modifying `main.js`.
+
+### Current: Trefoil Knot
+
+```javascript
+x = sin(t) + 2*sin(2*t)
+y = cos(t) - 2*cos(2*t)
+z = -sin(3*t)
 ```
 
-The optimized files will be in the `dist/` directory.
+### Figure-8 Knot
 
-## 📝 How to Use
-
-### Preset Knots
-
-1. Select a preset from the dropdown menu
-2. Click "Update Knot" to visualize
-3. Adjust parameters (color, samples, tube radius)
-
-### Custom Formulas
-
-1. Select "Custom Formula" from the preset dropdown
-2. Enter three parametric equations for X(t), Y(t), and Z(t)
-3. Use `t` as the parameter (ranges from 0 to 2π)
-4. Available functions: `sin`, `cos`, `tan`, `sqrt`, `abs`, `pow`, `exp`, `log`
-5. Available constants: `pi`, `e`, `i` (imaginary unit)
-
-**Example Custom Formula:**
-```
-X(t) = sin(t) + 2*sin(2*t)
-Y(t) = cos(t) - 2*cos(2*t)
-Z(t) = -sin(3*t)
+```javascript
+x = (2 + cos(2*t)) * cos(3*t)
+y = (2 + cos(2*t)) * sin(3*t)
+z = sin(4*t)
 ```
 
-### 3D Printing
+### Cinquefoil Knot (5-fold symmetry)
 
-1. Switch to "Tube (3D)" render mode
-2. Adjust tube radius for your printer's capabilities
-3. Click "📥 Download STL for 3D Printing"
-4. Use your slicer software (Cura, PrusaSlicer, etc.) to prepare for printing
-
-## 🌐 Deploy to Cloudflare Pages
-
-### Method 1: GitHub Integration (Recommended)
-
-1. Push your code to GitHub
-2. Log in to [Cloudflare Dashboard](https://dash.cloudflare.com/)
-3. Go to **Workers & Pages** → **Create Application** → **Pages**
-4. Connect your GitHub account
-5. Select your `knot-canvas` repository
-6. Configure build settings:
-   - **Build command**: `npm run build`
-   - **Build output directory**: `dist`
-7. Click **Save and Deploy**
-
-Your app will be live at `https://knot-canvas.pages.dev` (or your custom domain)!
-
-### Method 2: Direct Upload via PowerShell
-
-If you prefer to deploy directly without GitHub integration:
-
-```powershell
-# Install Wrangler CLI
-npm install -g wrangler
-
-# Login to Cloudflare
-wrangler login
-
-# Build the project
-npm run build
-
-# Deploy to Cloudflare Pages
-wrangler pages deploy dist --project-name=knot-canvas
+```javascript
+x = sin(2*t) * (2 + cos(5*t))
+y = cos(2*t) * (2 + cos(5*t))
+z = sin(5*t)
 ```
 
-## 📚 Educational Use
+### Torus Knot (5,3)
 
-This project is perfect for:
+```javascript
+x = cos(3*t) * (2 + cos(5*t))
+y = sin(3*t) * (2 + cos(5*t))
+z = sin(5*t)
+```
 
-- **Mathematics Classes**: Visualizing parametric equations and topology
-- **3D Printing Workshops**: Creating custom mathematical models
-- **Geometry & Calculus**: Understanding curves in 3D space
-- **STEM Projects**: Combining programming, math, and physical fabrication
+### Lissajous Knot
 
-### Teaching Ideas
+```javascript
+x = cos(3*t)
+y = cos(4*t)
+z = cos(7*t)
+```
 
-1. **Explore Mathematical Concepts**: Have students derive formulas for different knot types
-2. **Parameter Investigation**: Change coefficients and observe the effects
-3. **3D Printing Challenge**: Print and compare different knot complexities
-4. **Custom Creations**: Students design their own mathematical knots
+### Spiral Torus Knot
 
-## 🛠️ Technology Stack
+```javascript
+x = (2 + cos(5*t)) * cos(2*t)
+y = (2 + cos(5*t)) * sin(2*t)
+z = sin(5*t) + 0.5*t
+```
 
-- **Three.js**: 3D rendering and visualization
-- **MathJS**: Mathematical expression parsing and evaluation
-- **Vite**: Fast build tool and development server
-- **Vanilla JavaScript**: No framework overhead, pure performance
+## 🛠️ Customization
+
+### Switch to Tube Rendering
+
+For a thicker, more 3D appearance, uncomment the "TUBE GEOMETRY" section in `main.js`:
+
+```javascript
+const curve = new THREE.CatmullRomCurve3(knotPoints);
+const tubeGeometry = new THREE.TubeGeometry(
+  curve,
+  1000,  // tubular segments
+  0.15,  // radius (adjust for thickness)
+  16,    // radial segments
+  true   // closed
+);
+const tubeMaterial = new THREE.MeshPhongMaterial({
+  color: 0xff6633,
+  shininess: 80,
+  specular: 0x444444
+});
+const knotTube = new THREE.Mesh(tubeGeometry, tubeMaterial);
+scene.add(knotTube);
+```
+
+### Adjust Sampling Resolution
+
+Increase or decrease the number of points for smoother/faster rendering:
+
+```javascript
+const knotPoints = generateKnotPoints(trefoilKnot, 2000); // Higher = smoother
+```
+
+### Change Colors
+
+Modify the material colors in `main.js`:
+
+```javascript
+const curveMaterial = new THREE.LineBasicMaterial({ 
+  color: 0xff6633, // Change this hex color
+  linewidth: 2 
+});
+```
 
 ## 📦 Project Structure
 
 ```
 knot-canvas/
-├── index.html          # Main HTML file
-├── main.js            # Application logic and Three.js setup
-├── style.css          # UI styling
-├── package.json       # Dependencies and scripts
-├── .gitignore        # Git ignore rules
-└── README.md         # This file
+├── index.html      # Main HTML file
+├── main.js         # Three.js scene and knot rendering
+├── style.css       # Minimal styling
+├── package.json    # Dependencies and scripts
+└── README.md       # This file
 ```
+
+## 🔧 Dependencies
+
+- **three**: 3D graphics library
+- **mathjs**: Mathematical expression parser (for future enhancements)
+- **vite**: Fast development server and build tool
+
+## 🎯 Next Steps
+
+1. **Add UI controls**: Input fields for custom parametric equations
+2. **Math parsing**: Use mathjs to parse user-input formulas
+3. **Export functionality**: Generate STL files for 3D printing
+4. **Animation**: Animate parameter `t` to show knot formation
+5. **Presets**: Add dropdown menu with common knots
+6. **Color schemes**: Add multiple color options
+7. **Lighting controls**: Adjust scene lighting interactively
+
+## 📚 Learn More
+
+- [Three.js Documentation](https://threejs.org/docs/)
+- [Parametric Equations](https://en.wikipedia.org/wiki/Parametric_equation)
+- [Knot Theory](https://en.wikipedia.org/wiki/Knot_theory)
 
 ## 🤝 Contributing
 
-Contributions are welcome! Feel free to:
-
-- Add new preset knots
-- Improve the UI/UX
-- Add new features (animations, sharing, etc.)
-- Fix bugs or optimize performance
+Feel free to fork this project and add your own knot formulas or features!
 
 ## 📄 License
 
-MIT License - feel free to use this project for educational purposes!
-
-## 🙏 Acknowledgments
-
-- Built with [Three.js](https://threejs.org/)
-- Math parsing by [MathJS](https://mathjs.org/)
-- Inspired by mathematical knot theory and topology
-
----
-
-**Happy Knot Creating! 🪢**
-
-For questions or issues, please open an issue on GitHub.
+MIT

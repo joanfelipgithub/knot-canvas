@@ -17,8 +17,10 @@
           <li><strong>Left Click + Drag:</strong> Rotate view</li>
           <li><strong>Right Click + Drag:</strong> Pan camera</li>
           <li><strong>Scroll Wheel:</strong> Zoom in/out</li>
+          <li><strong>ESC or click outside:</strong> Close this window</li>
         </ul>
         <button id="got-it-btn">Got it!</button>
+        <p style="margin-top: 12px; font-size: 11px; color: #888;">This message will auto-hide in 10 seconds</p>
       </div>
     </div>
     
@@ -28,27 +30,36 @@
       
       <!-- Preset Selector -->
       <div class="control-group">
-        <label for="preset-select">Preset Knots:</label>
+        <label for="preset-select">Preset:</label>
         <select id="preset-select">
           <option value="trefoil">Trefoil Knot</option>
           <option value="figure8">Figure-8 Knot</option>
           <option value="cinquefoil">Cinquefoil Knot</option>
           <option value="torus53">Torus Knot (5,3)</option>
           <option value="lissajous">Lissajous Knot</option>
+          <option value="dna">DNA Double Helix</option>
           <option value="custom">Custom Formula</option>
         </select>
       </div>
 
-      <!-- Custom Formula Inputs -->
-      <div class="control-group" id="custom-inputs">
-        <label for="formula-combined">Enter formulas (one per line):</label>
-        <textarea id="formula-combined" rows="4" placeholder="X(t) = sin(t) + 2*sin(2*t)
-Y(t) = cos(t) - 2*cos(2*t)
-Z(t) = -sin(3*t)"></textarea>
-        <small class="hint">Paste all three formulas at once, or type one per line</small>
+      <!-- Strand Management -->
+      <div class="control-group">
+        <label>Strands: <span id="strand-count">1</span></label>
+        <div style="display: flex; gap: 8px;">
+          <button id="add-strand-btn" class="small-btn">➕ Add</button>
+          <button id="remove-strand-btn" class="small-btn">➖ Remove</button>
+        </div>
+        <small class="hint">Paste AI-generated formulas directly!</small>
       </div>
 
-      <!-- Rendering Options -->
+      <!-- Strands Container -->
+      <div id="strands-container">
+        <!-- Strand panels will be added here dynamically -->
+      </div>
+
+      <!-- Global Settings -->
+      <h3 style="font-size: 15px; margin: 20px 0 12px 0; color: #888; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 16px;">Global Settings</h3>
+
       <div class="control-group">
         <label for="render-mode">Render Mode:</label>
         <select id="render-mode">
@@ -64,18 +75,41 @@ Z(t) = -sin(3*t)"></textarea>
       </div>
 
       <div class="control-group">
-        <label for="color-picker">Color:</label>
-        <input type="color" id="color-picker" value="#ff6633" />
-      </div>
-
-      <div class="control-group">
         <label for="samples">Samples:</label>
         <input type="range" id="samples" min="100" max="2000" step="100" value="1000" />
         <span id="samples-value">1000</span>
       </div>
 
+      <div class="control-group">
+        <label for="t-min">Parameter Range (t):</label>
+        <div style="display: flex; gap: 8px; align-items: center;">
+          <input type="text" id="t-min" value="0" style="width: 80px; padding: 8px; margin-bottom: 0;" />
+          <span style="color: #888;">to</span>
+          <input type="text" id="t-max" value="2*pi" style="width: 80px; padding: 8px; margin-bottom: 0;" />
+        </div>
+        <small class="hint">Use expressions like 2*pi, pi/2, 3*pi/4, etc.</small>
+      </div>
+
+      <div class="control-group">
+        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+          <input type="checkbox" id="closed-curve" checked style="width: 18px; height: 18px; cursor: pointer;" />
+          <span>Force Closed Curve</span>
+        </label>
+        <small class="hint">Uncheck for open curves</small>
+      </div>
+
       <!-- Update Button -->
       <button id="update-btn">Update Knot</button>
+      
+      <!-- Reset View Button -->
+      <button id="reset-view-btn" class="secondary-btn" style="margin-top: 8px;">🎯 Reset View</button>
+      
+      <!-- Save/Load Buttons -->
+      <div style="display: flex; gap: 8px; margin-top: 8px;">
+        <button id="save-formulas-btn" class="secondary-btn" style="flex: 1;">💾 Save Formulas</button>
+        <button id="load-formulas-btn" class="secondary-btn" style="flex: 1;">📂 Load Formulas</button>
+      </div>
+      <input type="file" id="load-file-input" accept=".txt,.knot" style="display: none;" />
       
       <!-- Export Button -->
       <button id="export-stl-btn" class="secondary-btn">📥 Download STL for 3D Printing</button>
@@ -85,7 +119,7 @@ Z(t) = -sin(3*t)"></textarea>
       
       <!-- Info -->
       <div class="info">
-        <small>Use t as the parameter (0 to 2π). Available: sin, cos, tan, sqrt, abs, pow, exp, log, <strong>i</strong> (imaginary unit), <strong>e</strong>, <strong>pi</strong>. Complex results use real part. Press Ctrl+Enter to update.</small>
+        <small><strong>📋 Paste Tip:</strong> Copy formulas from AI in any format (X(t)=..., X₂(t)=..., or plain text). Press Ctrl+Enter to update!</small>
       </div>
     </div>
 
